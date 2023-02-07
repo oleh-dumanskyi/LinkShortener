@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Shortener.Persistence
+﻿namespace Shortener.Persistence
 {
     internal class DbInitializer
     {

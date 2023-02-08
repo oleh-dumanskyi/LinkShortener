@@ -7,7 +7,10 @@ using Shortener.Persistence;
 var builder = WebApplication.CreateBuilder(args);
 
 #region Service registrations
-var connectionString = builder.Configuration.GetSection("DbConnection");
+ConfigurationManager configuration = builder.Configuration;
+builder.Environment.ContentRootPath = Assembly.GetEntryAssembly().Location;
+builder.Services.AddApplication();
+builder.Services.AddPersistence(configuration);
 
 using (var scope = builder.Services.BuildServiceProvider().CreateScope())
 {
@@ -28,9 +31,6 @@ builder.Services.AddAutoMapper(config =>
     config.AddProfile(new AssemblyMappingProfile(Assembly.GetExecutingAssembly()));
     config.AddProfile(new AssemblyMappingProfile(typeof(IUrlDbContext).Assembly));
 });
-
-builder.Services.AddApplication();
-builder.Services.AddPersistence(connectionString);
 
 builder.Services.AddControllers();
 

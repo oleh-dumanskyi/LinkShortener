@@ -1,0 +1,36 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Shortener.Application.Interfaces;
+using Shortener.Domain;
+
+namespace Shortener.Application.Urls.Queries.GetUrlsList
+{
+    public class GetUrlListQueryHandler : IRequestHandler<GetUrlListQuery, UrlsListVm>
+    {
+        private readonly IUrlDbContext _context;
+        private readonly IMapper _mapper;
+
+        public GetUrlListQueryHandler(IUrlDbContext context, IMapper mapper)
+        {
+            _context = context;
+            _mapper = mapper;
+        }
+
+        public async Task<UrlsListVm> Handle(GetUrlListQuery request, CancellationToken cancellationToken)
+        {
+            var urlsQuery = await _context.Urls
+                .Where(url => url.UserId == request.UserId)
+                .ProjectTo<UrlListDto>(_mapper.ConfigurationProvider)
+                .ToListAsync(cancellationToken);
+
+            return new UrlsListVm { Urls = urlsQuery };
+        }
+    }
+}

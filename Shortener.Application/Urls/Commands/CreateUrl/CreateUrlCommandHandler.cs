@@ -14,7 +14,6 @@ namespace Shortener.Application.Urls.Commands.CreateUrl
         {
             _context = context;
         }
-
         public async Task<Guid> Handle(CreateUrlCommand request, CancellationToken cancellationToken)
         {
             var url = new Url
@@ -25,18 +24,21 @@ namespace Shortener.Application.Urls.Commands.CreateUrl
                 Description = request.Description,
                 CreationDate = DateTime.Now,
                 EditDate = null,
-                CreatedUri = CreateShortUrl(request.BaseUri, cancellationToken).Result
+                ShortenedUri = CreateShortUrl(request.BaseUri)
             };
+
+            await _context.Urls.AddAsync(url, cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
 
             return url.Id;
         }
 
-        private async Task<Uri> CreateShortUrl(Uri baseUri, CancellationToken cancellationToken)
+        private Uri CreateShortUrl(Uri baseUri)
         {
             var rngNumberHash = Random.Shared.NextInt64()
                 .GetHashCode().ToString();
             var base64EncodedString = Convert.ToBase64String(Encoding.UTF8.GetBytes(rngNumberHash));
             return new Uri(@$"http://home/{base64EncodedString}");
         }
-}
+    }
 }

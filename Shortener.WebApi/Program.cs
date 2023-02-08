@@ -5,7 +5,6 @@ using Shortener.Application.Interfaces;
 using Shortener.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
 
 #region Service registrations
 var connectionString = builder.Configuration.GetSection("DbConnection");
@@ -33,6 +32,8 @@ builder.Services.AddAutoMapper(config =>
 builder.Services.AddApplication();
 builder.Services.AddPersistence(connectionString);
 
+builder.Services.AddControllers();
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
@@ -45,6 +46,7 @@ builder.Services.AddCors(options =>
 #endregion
 
 #region Pipeline
+var app = builder.Build();
 
 app.UseRouting();
 app.UseHttpsRedirection();

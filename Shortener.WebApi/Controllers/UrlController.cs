@@ -1,10 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Shortener.Application.Urls.Commands.CreateUrl;
 using Shortener.Application.Urls.Queries.GetUrlsList;
+using Shortener.WebApi.Models;
 
 namespace Shortener.WebApi.Controllers
 {
     public class UrlController : BaseController
     {
+        private readonly IMapper _mapper;
+        public UrlController(IMapper mapper) => _mapper = mapper;
+
         [HttpGet]
         public async Task<ActionResult<UrlsListVm>> GetAll()
         {
@@ -14,6 +20,15 @@ namespace Shortener.WebApi.Controllers
             };
             var vm = await Mediator.Send(query);
             return Ok(vm);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<Guid>> Create([FromBody] CreateUrlDto createUrlDto)
+        {
+            var command = _mapper.Map<CreateUrlCommand>(createUrlDto);
+            command.UserId = UserId;
+            var noteId = await Mediator.Send(command);
+            return Ok(noteId);
         }
     }
 }

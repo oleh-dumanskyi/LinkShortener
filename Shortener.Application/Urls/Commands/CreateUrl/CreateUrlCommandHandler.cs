@@ -24,7 +24,8 @@ namespace Shortener.Application.Urls.Commands.CreateUrl
                 Description = request.Description,
                 CreationDate = DateTime.Now,
                 EditDate = null,
-                ShortenedUri = CreateShortUrl(request.BaseUri)
+                BaseUri = request.BaseUri,
+                ShortenedUri = CreateShortUrl()
             };
 
             await _context.Urls.AddAsync(url, cancellationToken);
@@ -33,12 +34,12 @@ namespace Shortener.Application.Urls.Commands.CreateUrl
             return url.Id;
         }
 
-        private Uri CreateShortUrl(Uri baseUri)
+        private Uri CreateShortUrl()
         {
             var rngNumberHash = Random.Shared.NextInt64()
                 .GetHashCode().ToString();
             var base64EncodedString = Convert.ToBase64String(Encoding.UTF8.GetBytes(rngNumberHash));
-            return new Uri(@$"http://home/{base64EncodedString}");
+            return new Uri(@$"https://localhost:7034/api/Url/Redirect/{base64EncodedString}");
         }
     }
 }

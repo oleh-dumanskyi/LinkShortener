@@ -5,7 +5,7 @@ using Shortener.Application.Common.Exceptions;
 using Shortener.Application.Interfaces;
 using Shortener.Domain;
 
-namespace Shortener.Application.Urls.Queries.GetAllUrls
+namespace Shortener.Application.Urls.Queries.GetUrlByShortUri
 {
     public class GetUrlHandler : IRequestHandler<GetUrlQuery, UrlVm>
     {
@@ -19,7 +19,7 @@ namespace Shortener.Application.Urls.Queries.GetAllUrls
         }
         public async Task<UrlVm> Handle(GetUrlQuery request, CancellationToken cancellationToken)
         {
-            var entity = await _context.Urls.FirstOrDefaultAsync(u => u.Id == request.Id, cancellationToken);
+            var entity = await _context.Urls.FirstOrDefaultAsync(u => u.ShortenedUri == request.ShortenedUri, cancellationToken);
 
             if (entity == null || entity.UserId == request.UserId || entity.IsDeleted)
                 throw new NotFoundException(nameof(Url), request.Id);

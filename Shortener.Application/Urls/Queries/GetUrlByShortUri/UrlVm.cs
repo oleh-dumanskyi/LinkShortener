@@ -2,7 +2,7 @@
 using Shortener.Application.Common.Mappings;
 using Shortener.Domain;
 
-namespace Shortener.Application.Urls.Queries.GetAllUrls
+namespace Shortener.Application.Urls.Queries.GetUrlByShortUri
 {
     public class UrlVm : IMapWith<Url>
     {

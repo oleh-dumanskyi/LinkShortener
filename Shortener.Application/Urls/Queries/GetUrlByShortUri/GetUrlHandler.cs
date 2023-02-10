@@ -19,9 +19,9 @@ namespace Shortener.Application.Urls.Queries.GetUrlByShortUri
         }
         public async Task<UrlVm> Handle(GetUrlQuery request, CancellationToken cancellationToken)
         {
-            var entity = await _context.Urls.FirstOrDefaultAsync(u => u.ShortenedUri == request.ShortenedUri, cancellationToken);
+            var entity = await _context.Urls.FirstOrDefaultAsync(u => u.UriShortPart == request.UriShortenedPart, cancellationToken);
 
-            if (entity == null || entity.UserId == request.UserId || entity.IsDeleted)
+            if (entity == null || /*entity.UserId == request.UserId ||*/ entity.IsDeleted)
                 throw new NotFoundException(nameof(Url), request.Id);
 
             return _mapper.Map<UrlVm>(entity);

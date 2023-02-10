@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Shortener.Application.Urls.Commands.CreateUrl;
 using Shortener.Application.Urls.Queries.GetUrlByShortUri;
 using Shortener.Application.Urls.Queries.GetUrlsList;
-using Shortener.Domain;
 using Shortener.WebApi.Models;
 
 namespace Shortener.WebApi.Controllers
@@ -34,13 +32,17 @@ namespace Shortener.WebApi.Controllers
             return Ok(noteId);
         }
 
-        [Route("api/[controller]/[action]/{getUrlDto}")]
-        [HttpGet]
-        public async Task<ActionResult<Uri>> Redirect([FromBody] GetUrlDto? getUrlDto)
+        [Route("~/[controller]/{ShortenedUriPart}")]
+        [HttpGet("{ShortenedUriPart}")]
+        public async Task<RedirectResult> Redirect(string ShortenedUriPart)
         {
-            var command = _mapper.Map<GetUrlQuery>(getUrlDto);
-            var url = await Mediator.Send(command);
-            return Ok(url.BaseUri);
+            var query = new GetUrlQuery()
+            {
+                UserId = UserId,
+                UriShortenedPart = ShortenedUriPart
+            };
+            var result = await Mediator.Send(query);
+            return new RedirectResult(result.BaseUri.AbsoluteUri);
         }
     }
 }

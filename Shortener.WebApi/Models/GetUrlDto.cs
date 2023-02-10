@@ -7,11 +7,12 @@ namespace Shortener.WebApi.Models
     public class GetUrlDto : IMapWith<GetUrlQuery>
     {
         public Uri ShortUri { get; set; }
+        public string ShortUriPart { get; set; }
 
         public void Mapping(Profile profile)
         {
             profile.CreateMap<GetUrlDto, GetUrlQuery>()
-                .ForMember(command => command.ShortenedUri, opt => opt.MapFrom(urlDto => urlDto.ShortUri));
+                .ForMember(command => command.UriShortenedPart, opt => opt.MapFrom(urlDto => urlDto.ShortUriPart));
         }
     }
 }

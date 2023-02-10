@@ -8,6 +8,8 @@ namespace Shortener.Application.Urls.Queries.GetUrlsList
     {
         public Guid Id { get; set; }
         public string Title { get; set; }
+        public Uri BaseUri { get; set; }
+        public Uri ShortenedUri { get; set; }
 
         public void Mapping(Profile profile)
         {
@@ -15,7 +17,9 @@ namespace Shortener.Application.Urls.Queries.GetUrlsList
                 .ForMember(urlDto => urlDto.Id,
                     opt => opt.MapFrom(url => url.Id))
                 .ForMember(urlDto => urlDto.Title,
-                    opt => opt.MapFrom(url => url.Title));
+                    opt => opt.MapFrom(url => url.Title))
+                .ForMember(urlDto => urlDto.BaseUri,
+                    opt => opt.MapFrom(url => url.BaseUri));
         }
     }
 }

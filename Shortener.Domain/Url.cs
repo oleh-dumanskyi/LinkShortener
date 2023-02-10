@@ -10,6 +10,7 @@
         public DateTime? EditDate { get; set; }
         public Uri BaseUri { get; set; }
         public Uri ShortenedUri { get; set; }
+        public string UriShortPart { get; set; }
         public bool IsDeleted { get; set; } = false;
     }
 }

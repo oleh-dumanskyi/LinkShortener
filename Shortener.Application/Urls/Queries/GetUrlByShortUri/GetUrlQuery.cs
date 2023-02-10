@@ -6,6 +6,6 @@ namespace Shortener.Application.Urls.Queries.GetUrlByShortUri
     {
         public Guid Id { get; set; }
         public Guid UserId { get; set; }
-        public Uri ShortenedUri { get; set; }
+        public string UriShortenedPart { get; set; }
     }
 }

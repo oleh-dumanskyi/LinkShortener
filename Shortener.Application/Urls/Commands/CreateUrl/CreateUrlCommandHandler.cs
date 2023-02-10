@@ -16,6 +16,7 @@ namespace Shortener.Application.Urls.Commands.CreateUrl
         }
         public async Task<Guid> Handle(CreateUrlCommand request, CancellationToken cancellationToken)
         {
+            var ShortUrlData = CreateShortUrl();
             var url = new Url
             {
                 Id = Guid.NewGuid(),
@@ -25,7 +26,8 @@ namespace Shortener.Application.Urls.Commands.CreateUrl
                 CreationDate = DateTime.Now,
                 EditDate = null,
                 BaseUri = request.BaseUri,
-                ShortenedUri = CreateShortUrl()
+                ShortenedUri = ShortUrlData.Item1,
+                UriShortPart = ShortUrlData.Item2
             };
 
             await _context.Urls.AddAsync(url, cancellationToken);
@@ -34,12 +36,13 @@ namespace Shortener.Application.Urls.Commands.CreateUrl
             return url.Id;
         }
 
-        private Uri CreateShortUrl()
+        private (Uri,string) CreateShortUrl()
         {
             var rngNumberHash = Random.Shared.NextInt64()
                 .GetHashCode().ToString();
             var base64EncodedString = Convert.ToBase64String(Encoding.UTF8.GetBytes(rngNumberHash));
-            return new Uri(@$"https://localhost:7034/api/Url/Redirect/{base64EncodedString}");
+            return (new Uri(@$"https://localhost:7034/Url/{base64EncodedString}"),
+                base64EncodedString);
         }
     }
 }

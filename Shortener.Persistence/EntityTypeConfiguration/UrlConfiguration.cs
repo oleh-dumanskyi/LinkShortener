@@ -12,6 +12,7 @@ namespace Shortener.Persistence.EntityTypeConfiguration
             builder.HasIndex(x => x.Id).IsUnique();
             builder.Property(x => x.Title).HasMaxLength(250);
             builder.Property(x => x.Description).HasMaxLength(250);
+            builder.ToTable(name: "Urls");
         }
     }
 }

@@ -1,4 +1,5 @@
 using System.Reflection;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Shortener.Application;
 using Shortener.Application.Common.Mappings;
 using Shortener.Application.Interfaces;
@@ -12,6 +13,15 @@ builder.Environment.ContentRootPath = Assembly.GetEntryAssembly().Location;
 builder.Services.AddApplication();
 builder.Services.AddPersistence(configuration);
 
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(opt =>
+    {
+        opt.LoginPath = "/api/User/Login";
+        opt.LogoutPath = "/api/User/Logout";
+    });
+    
+builder.Services.AddAuthorization();
+
 using (var scope = builder.Services.BuildServiceProvider().CreateScope())
 {
     var serviceProvider = scope.ServiceProvider;
@@ -22,7 +32,7 @@ using (var scope = builder.Services.BuildServiceProvider().CreateScope())
     }
     catch (Exception e)
     {
-
+        
     }
 }
 
@@ -32,7 +42,7 @@ builder.Services.AddAutoMapper(config =>
     config.AddProfile(new AssemblyMappingProfile(typeof(IUrlDbContext).Assembly));
 });
 
-builder.Services.AddControllers();
+builder.Services.AddControllersWithViews();
 
 builder.Services.AddCors(options =>
 {
@@ -50,11 +60,16 @@ var app = builder.Build();
 
 app.UseRouting();
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.UseCors("AllowAll");
 
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
+    //endpoints.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/");
 });
 
 app.Run();

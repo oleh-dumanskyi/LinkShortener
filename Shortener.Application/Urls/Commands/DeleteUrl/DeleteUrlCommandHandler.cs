@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Shortener.Application.Common.Exceptions;
 using Shortener.Application.Interfaces;
 using Shortener.Domain;

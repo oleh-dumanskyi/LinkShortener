@@ -1,12 +1,12 @@
-﻿using System.Security.Claims;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Shortener.WebApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
-    public abstract class BaseController : ControllerBase
+    public abstract class BaseController : Controller
     {
         private IMediator _mediator;
 
@@ -16,5 +16,7 @@ namespace Shortener.WebApi.Controllers
         internal Guid UserId => !User.Identity.IsAuthenticated
             ? Guid.Empty
             : Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+        protected bool IsAuthorized => User.Identity.IsAuthenticated;
     }
 }

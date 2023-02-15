@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shortener.Application.Urls.Commands.CreateUrl;
 using Shortener.Application.Urls.Queries.GetUrlByShortUri;
@@ -13,6 +14,7 @@ namespace Shortener.WebApi.Controllers
         public UrlController(IMapper mapper) => _mapper = mapper;
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<UrlsListVm>> GetAll()
         {
             var query = new GetUrlListQuery()
@@ -24,6 +26,7 @@ namespace Shortener.WebApi.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<Guid>> Create([FromBody] CreateUrlDto createUrlDto)
         {
             var command = _mapper.Map<CreateUrlCommand>(createUrlDto);

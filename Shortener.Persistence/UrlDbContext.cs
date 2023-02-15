@@ -8,10 +8,12 @@ namespace Shortener.Persistence
     public sealed class UrlDbContext : DbContext, IUrlDbContext
     {
         public DbSet<Url> Urls { get; set; }
+        public DbSet<User> Users { get; set; }
         public UrlDbContext(DbContextOptions<UrlDbContext> options) : base(options) { }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new UrlConfiguration());
+            builder.ApplyConfiguration(new UserConfiguration());
             base.OnModelCreating(builder);
         }
     }

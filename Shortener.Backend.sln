@@ -11,13 +11,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentatio
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{7D6FAF32-9DE5-4982-BB5E-E934D8AC2774}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shortener.Domain", "Shortener.Domain\Shortener.Domain.csproj", "{ECE5EDF7-DCCA-4111-8D97-95D01E7F7431}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shortener.Domain", "Shortener.Domain\Shortener.Domain.csproj", "{ECE5EDF7-DCCA-4111-8D97-95D01E7F7431}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shortener.Application", "Shortener.Application\Shortener.Application.csproj", "{FC860F79-9AAC-4722-9A14-8FCDEEF566E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shortener.Application", "Shortener.Application\Shortener.Application.csproj", "{FC860F79-9AAC-4722-9A14-8FCDEEF566E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shortener.Persistence", "Shortener.Persistence\Shortener.Persistence.csproj", "{EF318D13-585F-4D10-BED0-9DD9EB2E9C84}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shortener.Persistence", "Shortener.Persistence\Shortener.Persistence.csproj", "{EF318D13-585F-4D10-BED0-9DD9EB2E9C84}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shortener.WebApi", "Shortener.WebApi\Shortener.WebApi.csproj", "{B7A3B5B5-F06A-4AD6-994B-9C7E48F4D5ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shortener.WebApi", "Shortener.WebApi\Shortener.WebApi.csproj", "{B7A3B5B5-F06A-4AD6-994B-9C7E48F4D5ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

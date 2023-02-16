@@ -1,11 +1,10 @@
-using System.Reflection;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Shortener.Application;
 using Shortener.Application.Common.Mappings;
 using Shortener.Application.Interfaces;
 using Shortener.Persistence;
+using System.Reflection;
 
 #region Service registrations
 var builder = WebApplication.CreateBuilder(args);
@@ -14,15 +13,15 @@ ConfigurationManager configuration = builder.Configuration;
 builder.Environment.ContentRootPath = Assembly.GetEntryAssembly().Location;
 builder.Services.AddApplication();
 builder.Services.AddPersistence(configuration);
+builder.Services.AddAuthorization();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(opt =>
     {
-        opt.LoginPath = "/api/User/Login";
-        opt.LogoutPath = "/api/User/Logout";
+        opt.LoginPath = "/User/Login";
+        opt.LogoutPath = "/User/Logout";
     });
-    
-builder.Services.AddAuthorization();
+
 builder.Services.Configure<ApiBehaviorOptions>(options =>
 {
     options.SuppressModelStateInvalidFilter = true;

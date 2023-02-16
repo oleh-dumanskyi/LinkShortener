@@ -7,12 +7,12 @@ using Shortener.Domain;
 
 namespace Shortener.Application.Urls.Queries.GetUrlByShortUri
 {
-    public class GetUrlHandler : IRequestHandler<GetUrlQuery, UrlVm>
+    public class GetUrlQueryHandler : IRequestHandler<GetUrlQuery, UrlVm>
     {
         private readonly IUrlDbContext _context;
         private readonly IMapper _mapper;
 
-        public GetUrlHandler(IUrlDbContext context, IMapper mapper)
+        public GetUrlQueryHandler(IUrlDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
@@ -21,7 +21,7 @@ namespace Shortener.Application.Urls.Queries.GetUrlByShortUri
         {
             var entity = await _context.Urls.FirstOrDefaultAsync(u => u.UriShortPart == request.UriShortenedPart, cancellationToken);
 
-            if (entity == null || entity.UserId == request.UserId || entity.IsDeleted)
+            if (entity == null || entity.IsDeleted)
                 throw new NotFoundException(nameof(Url), request.Id);
 
             return _mapper.Map<UrlVm>(entity);

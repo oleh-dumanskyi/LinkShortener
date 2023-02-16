@@ -27,7 +27,8 @@ namespace Shortener.Application.Users.Commands.LoginUser
 
             var claims = new List<Claim>()
             {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.Login)
             };
 
             ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Cookies");

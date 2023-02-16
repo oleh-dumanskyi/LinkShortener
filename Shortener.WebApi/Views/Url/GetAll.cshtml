@@ -1,0 +1,31 @@
+﻿@model ModifyUrlDto
+
+<p></p>
+<a asp-controller="Url" asp-action="Create">Нове посилання</a>
+<p></p>
+<a asp-controller="Home" asp-action="Index">Назад</a>
+<p><p></p></p>
+
+<table style=
+       "border-collapse: collapse; 
+        border-color: lightgrey; 
+        border-style: solid;">
+    <tr>
+        <th style="padding:0 15px 0 15px;">Заголовок</th>
+        <th style="padding:0 15px 0 15px;">Скорочений URL</th>
+        <th style="padding:0 15px 0 15px;"></th>
+    </tr>
+    @foreach (var link in ViewBag.vm.Urls)
+    {
+        <tr>
+            <td style="padding:0 15px 0 15px;">@link.Title</td>
+            <td style="padding:0 15px 0 15px;"><a href="@link.ShortenedUri">@link.ShortenedUri</a></td>
+            <td style="padding:0 15px 0 15px;">
+                <form asp-controller="Url" asp-action="Delete" method="post">
+                    <input type="hidden" value="@link.Id" asp-for="Id"/>
+                    <button type="submit">Видалити</button>
+                </form>
+            </td>
+        </tr>
+    }
+</table>

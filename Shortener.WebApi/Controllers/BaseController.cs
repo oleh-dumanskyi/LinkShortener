@@ -16,7 +16,5 @@ namespace Shortener.WebApi.Controllers
         internal Guid UserId => !User.Identity.IsAuthenticated
             ? Guid.Empty
             : Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-
-        public bool IsAuthorized => User.Identity.IsAuthenticated;
     }
 }

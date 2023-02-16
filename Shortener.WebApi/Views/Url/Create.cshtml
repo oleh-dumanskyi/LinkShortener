@@ -1,0 +1,34 @@
+﻿@model CreateUrlDto
+
+<form asp-controller="Url" asp-action="Create" method="post">
+    <div><h3>Нове посилання</h3></div>
+    <p><p></p></p>
+    <div>
+        <label>Заголовок</label>
+        <br />
+        <input asp-for="Title" />
+        <span asp-validation-for="Title"></span>
+        <p></p>
+    </div>
+    <div>
+        <label>Опис (опціонально)</label>
+        <br />
+        <input asp-for="Description" />
+        <p></p>
+    </div>
+    <div>
+        <label>Посилання</label>
+        <br />
+        <input asp-for="BaseUri" />
+        <span asp-validation-for="BaseUri"></span>
+        <p></p>
+    </div>
+    <div>
+        <button type="submit" class="button">Створити</button>
+    </div>
+    <p></p>
+    <a asp-controller="Url" asp-action="GetAll">Назад</a>
+    <div>
+        
+    </div>
+</form>

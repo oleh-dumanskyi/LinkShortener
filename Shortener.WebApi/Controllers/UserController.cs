@@ -1,12 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Shortener.Application.Users.Commands.LoginUser;
 using Shortener.Application.Users.Commands.RegisterUser;
 using Shortener.WebApi.Models;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Shortener.WebApi.Controllers
 {
@@ -15,21 +16,70 @@ namespace Shortener.WebApi.Controllers
         private readonly IMapper _mapper;
         public UserController(IMapper mapper) => _mapper = mapper;
 
-        [HttpPost]
-        public async Task<ActionResult<Guid>> Register([FromBody] RegisterUserCommand command, CancellationToken token)
+        [HttpGet]
+        public ViewResult Register()
         {
-            var result = await Mediator.Send(command, token);
-            return Ok(result);
+            return View("Register");
         }
+
         [HttpPost]
-        public async Task<ActionResult<Guid>> Login(LoginUserDto loginDto)
+        public async Task<ActionResult> Register([FromForm] RegisterUserCommand command, CancellationToken token)
         {
-            var command = _mapper.Map<LoginUserCommand>(loginDto);
-            var identity = Mediator.Send(command);
-            await HttpContext.SignInAsync(
-                CookieAuthenticationDefaults.AuthenticationScheme,
-                new ClaimsPrincipal(identity.Result));
-            return Ok("Logged In");
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new InvalidDataException("Input is incorrect");
+                }
+
+                var result = await Mediator.Send(command, token);
+                return RedirectToAction("Login");
+            }
+            catch (InvalidDataException)
+            {
+                return View();
+            }
+            catch (DbUpdateException e)
+            {
+                if(e.InnerException.Message.Contains("UNIQUE constraint failed"))
+                    ViewBag.ErrorMessage = "Користувач з таким ім'ям вже існує!";
+                else ViewBag.ErrorMessage = "Некоректні дані!";
+                return View();
+            }
+        }
+
+        [HttpGet]
+        public ViewResult Login()
+        {
+            return View("Login");
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Login([FromForm] LoginUserDto loginDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new InvalidDataException("Input is incorrect");
+                }
+
+                var command = _mapper.Map<LoginUserCommand>(loginDto);
+                var identity = Mediator.Send(command);
+                await HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(identity.Result));
+                return RedirectToAction("Index", "Home");
+            }
+            catch (InvalidDataException)
+            {
+                return View();
+            }
+            catch (AggregateException e)
+            {
+                ViewBag.InputError = "Неправильне ім'я користувача або пароль!";
+                return View();
+            }
         }
 
         [HttpGet]
@@ -37,13 +87,7 @@ namespace Shortener.WebApi.Controllers
         public async Task<ActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return Ok();
-        }
-
-        [HttpGet]
-        public async Task<ActionResult> Test()
-        {
-            return Ok(User.Identity.IsAuthenticated);
+            return RedirectToAction("Index", "Home");
         }
     }
 }

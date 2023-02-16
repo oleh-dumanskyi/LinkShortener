@@ -5,7 +5,7 @@ using System.Security.Claims;
 namespace Shortener.WebApi.Controllers
 {
     [ApiController]
-    [Route("api/[controller]/[action]")]
+    [Route("/[controller]/[action]")]
     public abstract class BaseController : Controller
     {
         private IMediator _mediator;
@@ -17,6 +17,6 @@ namespace Shortener.WebApi.Controllers
             ? Guid.Empty
             : Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-        protected bool IsAuthorized => User.Identity.IsAuthenticated;
+        public bool IsAuthorized => User.Identity.IsAuthenticated;
     }
 }

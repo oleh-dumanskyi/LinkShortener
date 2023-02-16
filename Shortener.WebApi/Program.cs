@@ -1,13 +1,15 @@
 using System.Reflection;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Shortener.Application;
 using Shortener.Application.Common.Mappings;
 using Shortener.Application.Interfaces;
 using Shortener.Persistence;
 
+#region Service registrations
 var builder = WebApplication.CreateBuilder(args);
 
-#region Service registrations
 ConfigurationManager configuration = builder.Configuration;
 builder.Environment.ContentRootPath = Assembly.GetEntryAssembly().Location;
 builder.Services.AddApplication();
@@ -21,6 +23,10 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     });
     
 builder.Services.AddAuthorization();
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
+});
 
 using (var scope = builder.Services.BuildServiceProvider().CreateScope())
 {
@@ -43,6 +49,7 @@ builder.Services.AddAutoMapper(config =>
 });
 
 builder.Services.AddControllersWithViews();
+
 
 builder.Services.AddCors(options =>
 {
@@ -69,7 +76,6 @@ app.UseCors("AllowAll");
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
-    //endpoints.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/");
 });
 
 app.Run();

@@ -1,9 +1,26 @@
 ﻿@page
-@model Shortener.WebApi.Views.Home.IndexModel
+@model HomeController
+@{
+    var IsAuthorized = User.Identity.IsAuthenticated;
+}
 @{
     <body>
+    <div>
+    @if (!IsAuthorized)
+    {
+        <p><h2>Необхідно увійти в систему!</h2></p>
+        <p></p>
+        <a asp-controller="User" asp-action="Login">Увійти</a>
+        <p></p>
+        <a asp-controller="User" asp-action="Register">Створити користувача</a>
+    }
+    else
+    {
         <div>
-            <p>Home page</p>
+            <p>Ви увійшли в систему</p>
+            <a asp-controller="User" asp-action="Logout">Вийти</a>
         </div>
+    }
+    </div>
     </body>
 }

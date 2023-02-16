@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.ComponentModel.DataAnnotations;
+using AutoMapper;
 using Shortener.Application.Common.Mappings;
 using Shortener.Application.Users.Commands.LoginUser;
 
@@ -6,7 +7,10 @@ namespace Shortener.WebApi.Models
 {
     public class LoginUserDto : IMapWith<LoginUserCommand>
     {
+        [Required(ErrorMessage = "Не вказане ім'я користувача")]
         public string Login { get; set; }
+        [Required(ErrorMessage = "Не вказаний пароль")]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
 
         public void Mapping(Profile profile)

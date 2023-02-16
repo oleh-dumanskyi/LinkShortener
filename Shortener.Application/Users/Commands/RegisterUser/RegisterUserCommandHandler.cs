@@ -18,6 +18,9 @@ namespace Shortener.Application.Users.Commands.RegisterUser
                 Urls = new List<Url>()
             };
 
+            //if (user.Login == string.Empty || user.Password == string.Empty)
+            //    throw new InvalidDataException();
+
             await _context.Users.AddAsync(user, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
 

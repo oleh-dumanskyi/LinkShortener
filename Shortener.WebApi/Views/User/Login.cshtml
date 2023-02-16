@@ -1,0 +1,27 @@
+﻿@model Shortener.WebApi.Models.LoginUserDto
+
+<form asp-controller="User" asp-action="Login" method="post">
+    <div><h3>Вхід</h3></div>
+    <p><p></p></p>
+    <div>
+        <label>Ім'я користувача</label>
+        <br/>
+        <input asp-for="Login" />
+        <span asp-validation-for="Login"></span>
+        <p></p>
+    </div>
+    <div>
+        <label>Пароль</label>
+        <br/>
+        <input asp-for="Password"/>
+        <span asp-validation-for="Password"></span>
+        <p></p>
+    </div>
+    <div>
+        <button type="submit" class="button">Увійти</button>
+    </div>
+    <a asp-controller="User" asp-action="Register">Створити користувача</a>
+    <div>
+        <p><label>@ViewBag.InputError</label></p>
+    </div>
+</form>

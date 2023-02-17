@@ -20,13 +20,13 @@ namespace Shortener.WebApi.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<ActionResult<UrlsListVm>> GetAll()
+        public async Task<ActionResult<UrlsListVm>> GetAll(CancellationToken cancellationToken)
         {
             var query = new GetUrlListQuery()
             {
                 UserId = UserId
             };
-            var vm = await Mediator.Send(query);
+            var vm = await Mediator.Send(query, cancellationToken);
             ViewBag.vm = vm;
             ViewBag.ErrorMessage = TempData["ErrorMessage"];
             return View("GetAll");
@@ -41,7 +41,8 @@ namespace Shortener.WebApi.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult<Guid>> Create([FromForm] CreateUrlDto createUrlDto)
+        public async Task<ActionResult<Guid>> Create([FromForm] CreateUrlDto createUrlDto,
+            CancellationToken cancellationToken)
         {
             try
             {
@@ -51,7 +52,7 @@ namespace Shortener.WebApi.Controllers
                 command.UserId = UserId;
                 var location = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}{Request.QueryString}");
                 command.CurrentUri = location;
-                var noteId = await Mediator.Send(command);
+                var noteId = await Mediator.Send(command, cancellationToken);
                 return RedirectToAction("GetAll");
             }
             catch (InvalidDataException)
@@ -64,24 +65,24 @@ namespace Shortener.WebApi.Controllers
 
         [Route("~/{ShortenedUriPart}")]
         [HttpGet("{ShortenedUriPart}")]
-        public async Task<RedirectResult> Redirect(string ShortenedUriPart)
+        public async Task<RedirectResult> Redirect(string ShortenedUriPart, CancellationToken cancellationToken)
         {
             var query = new GetUrlQuery
             {
                 UriShortenedPart = ShortenedUriPart
             };
-            var result = await Mediator.Send(query);
+            var result = await Mediator.Send(query, cancellationToken);
             return new RedirectResult(result.BaseUri.AbsoluteUri);
         }
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult> Delete([FromForm]ModifyUrlDto modifyUrlDto)
+        public async Task<ActionResult> Delete([FromForm]ModifyUrlDto modifyUrlDto, CancellationToken cancellationToken)
         {
             try
             {
                 var command = _mapper.Map<DeleteUrlCommand>(modifyUrlDto);
                 command.UserId = UserId;
-                Mediator.Send(command);
+                Mediator.Send(command, cancellationToken);
             }
             catch (NotFoundException)
             {
@@ -99,13 +100,13 @@ namespace Shortener.WebApi.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult> GetDetails([FromForm] ModifyUrlDto urlDto)
+        public async Task<ActionResult> GetDetails([FromForm] ModifyUrlDto urlDto, CancellationToken cancellationToken)
         {
             try
             {
                 var command = _mapper.Map<GetUrlDetailsQuery>(urlDto);
                 command.UserId = UserId;
-                var result = await Mediator.Send(command);
+                var result = await Mediator.Send(command, cancellationToken);
                 ViewBag.UrlDetails = result;
                 return View();
             }
@@ -118,13 +119,13 @@ namespace Shortener.WebApi.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult> EditView([FromForm] ModifyUrlDto urlDto)
+        public async Task<ActionResult> EditView([FromForm] ModifyUrlDto urlDto, CancellationToken cancellationToken)
         {
             try
             {
                 var command = _mapper.Map<GetUrlDetailsQuery>(urlDto);
                 command.UserId = UserId;
-                var result = await Mediator.Send(command);
+                var result = await Mediator.Send(command, cancellationToken);
                 ViewBag.UrlDetails = result;
                 return View();
             }
@@ -135,14 +136,14 @@ namespace Shortener.WebApi.Controllers
         }
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult> Edit([FromForm] EditUrlCommand editCommand)
+        public async Task<ActionResult> Edit([FromForm] EditUrlCommand editCommand, CancellationToken cancellationToken)
         {
             try
             {
                 if (!ModelState.IsValid)
                     throw new InvalidDataException();
                 editCommand.UserId = UserId;
-                await Mediator.Send(editCommand);
+                await Mediator.Send(editCommand, cancellationToken);
                 return RedirectToAction("GetAll");
             }
             catch (NotFoundException)

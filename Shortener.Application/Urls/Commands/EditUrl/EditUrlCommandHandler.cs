@@ -10,7 +10,7 @@ namespace Shortener.Application.Urls.Commands.EditUrl
     public class EditUrlCommandHandler : IRequestHandler<EditUrlCommand, Unit>
     {
         private readonly IUrlDbContext _context;
-        private const string InvalidCharacters = ".~:/?#[]@!$&'()*+,;=";
+        private const string InvalidCharacters = ".~:/?#[]@!$&'()*+,;=\\|";
         public EditUrlCommandHandler(IUrlDbContext context) => _context = context;
         public async Task<Unit> Handle(EditUrlCommand request, CancellationToken cancellationToken)
         {
@@ -20,8 +20,11 @@ namespace Shortener.Application.Urls.Commands.EditUrl
             if (url == null || url.IsDeleted)
                 throw new NotFoundException(nameof(Url), url.Id);
 
-            if (await _context.Urls.FirstOrDefaultAsync(u => u.UriShortPart == request.ShortenedPartUri 
-                                                             && request.ShortenedPartUri != url.UriShortPart) != null)
+            if (await _context.Urls
+                    .FirstOrDefaultAsync(u => 
+                            u.UriShortPart == request.ShortenedPartUri 
+                            && request.ShortenedPartUri != url.UriShortPart,
+                        cancellationToken) != null)
                 throw new ConstraintException();
 
             if (request.ShortenedPartUri.IndexOfAny(InvalidCharacters.ToCharArray()) != -1)

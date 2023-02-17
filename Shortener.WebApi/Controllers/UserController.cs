@@ -23,7 +23,7 @@ namespace Shortener.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Register([FromForm] RegisterUserCommand command, CancellationToken token)
+        public async Task<ActionResult> Register([FromForm] RegisterUserCommand command, CancellationToken cancellationToken)
         {
             try
             {
@@ -32,7 +32,7 @@ namespace Shortener.WebApi.Controllers
                     throw new InvalidDataException("Input is incorrect");
                 }
 
-                var result = await Mediator.Send(command, token);
+                var result = await Mediator.Send(command, cancellationToken);
                 return RedirectToAction("Login");
             }
             catch (InvalidDataException)
@@ -55,7 +55,7 @@ namespace Shortener.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Login([FromForm] LoginUserDto loginDto)
+        public async Task<ActionResult> Login([FromForm] LoginUserDto loginDto, CancellationToken cancellationToken)
         {
             try
             {
@@ -65,7 +65,7 @@ namespace Shortener.WebApi.Controllers
                 }
 
                 var command = _mapper.Map<LoginUserCommand>(loginDto);
-                var identity = Mediator.Send(command);
+                var identity = Mediator.Send(command, cancellationToken);
                 await HttpContext.SignInAsync(
                     CookieAuthenticationDefaults.AuthenticationScheme,
                     new ClaimsPrincipal(identity.Result));

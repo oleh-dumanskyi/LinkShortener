@@ -20,6 +20,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     {
         opt.LoginPath = "/User/Login";
         opt.LogoutPath = "/User/Logout";
+        opt.ExpireTimeSpan = TimeSpan.FromMinutes(20);
     });
 
 builder.Services.Configure<ApiBehaviorOptions>(options =>

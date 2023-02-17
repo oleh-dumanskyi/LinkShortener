@@ -1,9 +1,12 @@
-﻿using AutoMapper;
+﻿using System.Data;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shortener.Application.Common.Exceptions;
 using Shortener.Application.Urls.Commands.CreateUrl;
 using Shortener.Application.Urls.Commands.DeleteUrl;
+using Shortener.Application.Urls.Commands.EditUrl;
+using Shortener.Application.Urls.Queries.GetDetails;
 using Shortener.Application.Urls.Queries.GetUrlByShortUri;
 using Shortener.Application.Urls.Queries.GetUrlsList;
 using Shortener.WebApi.Models;
@@ -25,6 +28,7 @@ namespace Shortener.WebApi.Controllers
             };
             var vm = await Mediator.Send(query);
             ViewBag.vm = vm;
+            ViewBag.ErrorMessage = TempData["ErrorMessage"];
             return View("GetAll");
         }
 
@@ -56,7 +60,7 @@ namespace Shortener.WebApi.Controllers
             
         }
 
-        [Route("~/[controller]/{ShortenedUriPart}")]
+        [Route("~/{ShortenedUriPart}")]
         [HttpGet("{ShortenedUriPart}")]
         public async Task<RedirectResult> Redirect(string ShortenedUriPart)
         {
@@ -82,6 +86,83 @@ namespace Shortener.WebApi.Controllers
                 return RedirectToAction("GetAll");
             }
             return RedirectToAction("GetAll");
+        }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult GetDetails()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<ActionResult> GetDetails([FromForm] ModifyUrlDto urlDto)
+        {
+            try
+            {
+                var command = _mapper.Map<GetUrlDetailsQuery>(urlDto);
+                command.UserId = UserId;
+                var result = await Mediator.Send(command);
+                ViewBag.UrlDetails = result;
+                return View();
+            }
+            catch (NotFoundException)
+            {
+                return RedirectToAction("GetAll");
+            }
+        }
+
+
+        [HttpPost]
+        [Authorize]
+        public async Task<ActionResult> EditView([FromForm] ModifyUrlDto urlDto)
+        {
+            try
+            {
+                var command = _mapper.Map<GetUrlDetailsQuery>(urlDto);
+                command.UserId = UserId;
+                var result = await Mediator.Send(command);
+                ViewBag.UrlDetails = result;
+                return View();
+            }
+            catch (NotFoundException)
+            {
+                return RedirectToAction("GetAll");
+            }
+        }
+        [HttpPost]
+        [Authorize]
+        public async Task<ActionResult> Edit([FromForm] EditUrlCommand editCommand)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    throw new InvalidDataException();
+                editCommand.UserId = UserId;
+                await Mediator.Send(editCommand);
+                return RedirectToAction("GetAll");
+            }
+            catch (NotFoundException)
+            {
+                TempData["ErrorMessage"] = "Помилка редагування! Некоректні дані!";
+                return RedirectToAction("GetAll");
+            }
+            catch (InvalidDataException)
+            {
+                TempData["ErrorMessage"] = "Помилка редагування! Некоректні дані!";
+                return RedirectToAction("GetAll");
+            }
+            catch (ConstraintException)
+            {
+                TempData["ErrorMessage"] = "Помилка редагування! Посилання з такою адресою вже існує!";
+                return RedirectToAction("GetAll");
+            }
+            catch (ArgumentException)
+            {
+                TempData["ErrorMessage"] = "Помилка редагування! Недопустимий символ в посиланні!";
+                return RedirectToAction("GetAll");
+            }
         }
     }
 }

@@ -41,7 +41,7 @@ namespace Shortener.Application.Urls.Commands.CreateUrl
             var rngNumberHash = Random.Shared.NextInt64()
                 .GetHashCode().ToString();
             var base64EncodedString = Convert.ToBase64String(Encoding.UTF8.GetBytes(rngNumberHash));
-            return (new Uri(@$"https://localhost:7034/Url/{base64EncodedString}"),
+            return (new Uri(@$"https://localhost:7034/{base64EncodedString}"),
                 base64EncodedString);
         }
     }

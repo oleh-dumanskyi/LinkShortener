@@ -1,0 +1,16 @@
+﻿<h2>Деталі посилання: @ViewBag.UrlDetails.Title</h2>
+<p><p></p></p>
+<label></label>
+<p><label>Заголовок: @ViewBag.UrlDetails.Title</label></p>
+@if (ViewBag.UrlDetails.Description != null)
+{
+    <p><label>Опис: @ViewBag.UrlDetails.Description</label></p>
+}
+<p><label>Базове посилання: <a href="@ViewBag.UrlDetails.BaseUri">@ViewBag.UrlDetails.BaseUri</a></label></p>
+<p><label>Скорочене посилання: <a href="@ViewBag.UrlDetails.ShortenedUri">@ViewBag.UrlDetails.ShortenedUri</a></label></p>
+<p><label>Дата створення: @ViewBag.UrlDetails.CreationDate</label></p>
+@if (ViewBag.UrlDetails.EditDate != null)
+{
+    <p><label>Дата редагування: @ViewBag.UrlDetails.EditDate</label></p>
+}
+<p><p><a asp-controller="Url" asp-action="GetAll">Назад</a></p></p>

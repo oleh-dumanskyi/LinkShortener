@@ -8,5 +8,6 @@ namespace Shortener.Application.Urls.Commands.CreateUrl
         public string Title { get; set; }
         public string Description { get; set; }
         public Uri BaseUri { get; set; }
+        public Uri CurrentUri { get; set; }
     }
 }

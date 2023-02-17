@@ -49,6 +49,8 @@ namespace Shortener.WebApi.Controllers
                     throw new InvalidDataException();
                 var command = _mapper.Map<CreateUrlCommand>(createUrlDto);
                 command.UserId = UserId;
+                var location = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}{Request.QueryString}");
+                command.CurrentUri = location;
                 var noteId = await Mediator.Send(command);
                 return RedirectToAction("GetAll");
             }

@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "secretStore": "AzureAppSettings",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/olehdbserv/databases/ShortenerDb",
+      "type": "mssql.azure",
+      "connectionId": "DbConnection"
+    }
+  }
+}

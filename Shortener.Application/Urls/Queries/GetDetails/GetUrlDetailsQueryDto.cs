@@ -15,6 +15,7 @@ namespace Shortener.Application.Urls.Queries.GetDetails
         public Uri BaseUri { get; set; }
         public Uri ShortenedUri { get; set; }
         public string UriShortenedPart { get; set; }
+        public long FollowingsCounter { get; set; }
 
         public void Mapping(Profile profile)
         {
@@ -36,7 +37,9 @@ namespace Shortener.Application.Urls.Queries.GetDetails
                 .ForMember(urlDto => urlDto.EditDate,
                     opt => opt.MapFrom(url => url.EditDate))
                 .ForMember(urlDto => urlDto.UriShortPart,
-                    opt => opt.MapFrom(url => url.UriShortenedPart));
+                    opt => opt.MapFrom(url => url.UriShortenedPart))
+                .ForMember(urlDto => urlDto.FollowingsCounter,
+                    opt => opt.MapFrom(url => url.FollowingsCounter));
         }
     }
 }

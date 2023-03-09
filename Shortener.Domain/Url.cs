@@ -13,5 +13,6 @@
         public string UriShortPart { get; set; }
         public bool IsDeleted { get; set; } = false;
         public User User { get; set; }
+        public long FollowingsCounter { get; set; } = default;
     }
 }

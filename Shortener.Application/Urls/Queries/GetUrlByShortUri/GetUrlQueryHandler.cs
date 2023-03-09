@@ -24,6 +24,10 @@ namespace Shortener.Application.Urls.Queries.GetUrlByShortUri
             if (entity == null || entity.IsDeleted)
                 throw new NotFoundException(nameof(Url), request.Id);
 
+            entity.FollowingsCounter += 1;
+            _context.Urls.Update(entity);
+            await _context.SaveChangesAsync(cancellationToken);
+
             return _mapper.Map<UrlVm>(entity);
         }
     }

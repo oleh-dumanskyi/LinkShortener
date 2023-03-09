@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Shortener.Application.Common.Exceptions;
 using Shortener.Application.Interfaces;
 using Shortener.Domain;
@@ -17,8 +18,8 @@ namespace Shortener.Application.Urls.Commands.DeleteUrl
         public async Task<Unit> Handle(DeleteUrlCommand request, CancellationToken cancellationToken)
         {
             var entity =
-                await _context.Urls.FindAsync(new object[] {request.Id}, cancellationToken);
-
+                 _context.Urls.FirstOrDefault(u => u.Id == request.Id);
+            
             if (entity == null || entity.UserId != request.UserId || entity.IsDeleted)
                 throw new NotFoundException(nameof(Url), request.Id);
 

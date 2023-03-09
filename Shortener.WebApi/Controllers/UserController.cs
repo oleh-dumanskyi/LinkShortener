@@ -23,7 +23,8 @@ namespace Shortener.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Register([FromForm] RegisterUserCommand command, CancellationToken cancellationToken)
+        public async Task<ActionResult> Register([FromForm] RegisterUserCommand command,
+            CancellationToken cancellationToken)
         {
             try
             {
@@ -55,7 +56,8 @@ namespace Shortener.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Login([FromForm] LoginUserDto loginDto, CancellationToken cancellationToken)
+        public async Task<ActionResult> Login([FromForm] LoginUserDto loginDto,
+            CancellationToken cancellationToken)
         {
             try
             {

@@ -3,6 +3,7 @@
 namespace Shortener.WebApi.Controllers
 {
     [Route("[controller]/")]
+    [Route("/")]
     public class HomeController : BaseController
     {
         [HttpGet]

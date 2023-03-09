@@ -36,7 +36,8 @@ namespace Shortener.Application.Urls.Queries.GetDetails
                 EditDate = url.EditDate,
                 ShortenedUri = url.ShortenedUri,
                 UriShortenedPart = url.UriShortPart,
-                UserId = url.UserId
+                UserId = url.UserId,
+                FollowingsCounter = url.FollowingsCounter
             };
         }
     }

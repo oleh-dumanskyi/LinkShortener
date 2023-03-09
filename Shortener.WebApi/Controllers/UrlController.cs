@@ -67,6 +67,7 @@ namespace Shortener.WebApi.Controllers
         [HttpGet("{ShortenedUriPart}")]
         public async Task<RedirectResult> Redirect(string ShortenedUriPart, CancellationToken cancellationToken)
         {
+            
             var query = new GetUrlQuery
             {
                 UriShortenedPart = ShortenedUriPart
@@ -76,7 +77,8 @@ namespace Shortener.WebApi.Controllers
         }
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult> Delete([FromForm]ModifyUrlDto modifyUrlDto, CancellationToken cancellationToken)
+        public async Task<ActionResult> Delete([FromForm]ModifyUrlDto modifyUrlDto,
+            CancellationToken cancellationToken)
         {
             try
             {
@@ -100,7 +102,8 @@ namespace Shortener.WebApi.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult> GetDetails([FromForm] ModifyUrlDto urlDto, CancellationToken cancellationToken)
+        public async Task<ActionResult> GetDetails([FromForm] ModifyUrlDto urlDto,
+            CancellationToken cancellationToken)
         {
             try
             {
@@ -119,7 +122,8 @@ namespace Shortener.WebApi.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult> EditView([FromForm] ModifyUrlDto urlDto, CancellationToken cancellationToken)
+        public async Task<ActionResult> EditView([FromForm] ModifyUrlDto urlDto,
+            CancellationToken cancellationToken)
         {
             try
             {
@@ -136,7 +140,8 @@ namespace Shortener.WebApi.Controllers
         }
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult> Edit([FromForm] EditUrlCommand editCommand, CancellationToken cancellationToken)
+        public async Task<ActionResult> Edit([FromForm] EditUrlCommand editCommand,
+            CancellationToken cancellationToken)
         {
             try
             {

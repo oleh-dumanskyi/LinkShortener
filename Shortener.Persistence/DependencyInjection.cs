@@ -12,7 +12,7 @@ namespace Shortener.Persistence
             var connectionString = configuration["DbConnection"];
             services.AddDbContext<UrlDbContext>(option =>
             {
-                option.UseSqlite(connectionString);
+                option.UseSqlServer(connectionString);
             });
 
             services.AddScoped<IUrlDbContext>(provider => provider

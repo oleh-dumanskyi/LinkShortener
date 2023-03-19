@@ -1,11 +1,14 @@
 ﻿using AutoMapper;
 using Shortener.Application.Common.Mappings;
+using Shortener.Application.Urls.Commands.CreateQrCode;
 using Shortener.Application.Urls.Commands.DeleteUrl;
 using Shortener.Application.Urls.Queries.GetDetails;
 
 namespace Shortener.WebApi.Models
 {
-    public class ModifyUrlDto : IMapWith<DeleteUrlCommand>, IMapWith<GetUrlDetailsQuery>
+    public class ModifyUrlDto : IMapWith<DeleteUrlCommand>,
+        IMapWith<GetUrlDetailsQuery>,
+        IMapWith<CreateQrCodeCommand>
     {
         public Guid Id { get; set; }
         public Guid UserId { get; set; }
@@ -22,6 +25,9 @@ namespace Shortener.WebApi.Models
                     opt => opt.MapFrom(urlDto => urlDto.Id))
                 .ForMember(command => command.UserId,
                     opt => opt.MapFrom(urlDto => urlDto.UserId));
+            profile.CreateMap<ModifyUrlDto, CreateQrCodeCommand>()
+                .ForMember(command => command.UrlId,
+                    opt => opt.MapFrom(urlDto => urlDto.Id));
         }
     }
 }

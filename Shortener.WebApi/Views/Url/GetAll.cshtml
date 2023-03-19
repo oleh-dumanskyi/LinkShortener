@@ -20,6 +20,7 @@
         <th style="padding:0 15px 0 15px;"></th>
         <th style="padding:0 15px 0 15px;"></th>
         <th style="padding:0 15px 0 15px;"></th>
+        <th style="padding:0 15px 0 15px;"></th>
     </tr>
     @foreach (var link in ViewBag.vm.Urls)
     {
@@ -43,6 +44,12 @@
                     <input type="hidden" value="@link.Id" asp-for="Id" />
                     <input type="hidden" asp-for="UserId" />
                     <button type="submit">Редагувати</button>
+                </form>
+            </td>
+            <td style="padding:0 15px 0 15px;">
+                <form asp-controller="Url" asp-action="CreateQrCode" method="post">
+                    <input type="hidden" value="@link.Id" asp-for="Id" />
+                    <button type="submit">Створити QR-код</button>
                 </form>
             </td>
         </tr>

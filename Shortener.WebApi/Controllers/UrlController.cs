@@ -13,6 +13,7 @@ using System.Data;
 using System.Net;
 using Shortener.Application.Redirections.Commands.Create;
 using Shortener.Application.Redirections.Queries.GetStatistics;
+using Shortener.Application.Urls.Commands.CreateQrCode;
 
 namespace Shortener.WebApi.Controllers
 {
@@ -83,7 +84,7 @@ namespace Shortener.WebApi.Controllers
             var redirectCommand = new CreateRedirectionCommand
             {
                 UserAgent = Request.Headers["User-Agent"].ToString(),
-                IpAddress = IPAddress.Parse("158.24.24.151"),
+                IpAddress = HttpContext.Connection.RemoteIpAddress,
                 Token = _configuration["IpstackApiToken"],
                 UrlId = result.Id
             };
@@ -211,6 +212,28 @@ namespace Shortener.WebApi.Controllers
                     return View("Stats/ByBrowser");
             }
             return RedirectToAction("GetAll");
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<ActionResult> CreateQrCode([FromForm] ModifyUrlDto query,
+            CancellationToken cancellationToken)
+        {
+            try
+            {
+                var command = _mapper.Map<CreateQrCodeCommand>(query);
+
+                var result = await Mediator.Send(command);
+                using (var ms = new MemoryStream())
+                {
+                    result.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                    return File(ms.ToArray(), "image/png", "QR-code.png");
+                }
+            }
+            catch (NotFoundException)
+            {
+                return RedirectToAction("GetAll");
+            }
         }
     }
 }

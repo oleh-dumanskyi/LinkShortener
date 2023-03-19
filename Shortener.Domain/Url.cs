@@ -11,8 +11,8 @@
         public Uri BaseUri { get; set; }
         public Uri ShortenedUri { get; set; }
         public string UriShortPart { get; set; }
-        public bool IsDeleted { get; set; } = false;
+        public string? QrCodeImageBytes { get; set; }
         public User User { get; set; }
-        public long FollowingsCounter { get; set; } = default;
+        public IList<Redirection> Redirections { get; set; }
     }
 }

@@ -21,7 +21,7 @@ namespace Shortener.Application.Urls.Queries.GetDetails
             var url = await _context.Urls
                 .FirstOrDefaultAsync(u => u.Id == request.Id
                             && u.UserId == request.UserId, cancellationToken);
-            if (url == null || url.IsDeleted)
+            if (url == null)
             {
                 throw new NotFoundException(nameof(Url), url.Id);
             }
@@ -36,8 +36,7 @@ namespace Shortener.Application.Urls.Queries.GetDetails
                 EditDate = url.EditDate,
                 ShortenedUri = url.ShortenedUri,
                 UriShortenedPart = url.UriShortPart,
-                UserId = url.UserId,
-                FollowingsCounter = url.FollowingsCounter
+                UserId = url.UserId
             };
         }
     }

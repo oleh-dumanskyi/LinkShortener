@@ -1,0 +1,17 @@
+﻿<p><p><a asp-controller="Url" asp-action="GetAll">Назад</a></p></p>
+
+<table style="border-collapse: collapse;
+              border-color: lightgrey;
+              border-style: solid;">
+    <tr>
+        <th style="padding:0 15px 0 15px;">Дата</th>
+        <th style="padding:0 15px 0 15px;">Кількість переходів</th>
+    </tr>
+    @foreach (var element in ViewBag.Statistics)
+    {
+        <tr>
+            <td style="padding:0 15px 0 15px;">@element.Key.Date</td>
+            <td style="padding:0 15px 0 15px;">@element.Value</td>
+        </tr>
+    }
+</table>

@@ -1,4 +1,6 @@
-﻿<h2>Деталі посилання: @ViewBag.UrlDetails.Title</h2>
+﻿@model Shortener.Application.Redirections.Queries.GetStatistics.GetStatisticsQuery
+
+<h2>Деталі посилання: @ViewBag.UrlDetails.Title</h2>
 <p><p></p></p>
 <label></label>
 <p><label>Заголовок: @ViewBag.UrlDetails.Title</label></p>
@@ -13,5 +15,25 @@
 {
     <p><label>Дата редагування: @ViewBag.UrlDetails.EditDate</label></p>
 }
-<p><label>Кількість переходів: @ViewBag.UrlDetails.FollowingsCounter</label></p>
 <p><p><a asp-controller="Url" asp-action="GetAll">Назад</a></p></p>
+
+<form asp-controller="Url" asp-action="GetStatistics" method="post">
+    <input type="hidden" value="@ViewBag.Id" asp-for="UrlId" />
+    <input type="hidden" value="0" asp-for="StatisticType" />
+    <button type="submit">Статистика за датою</button>
+</form>
+<form asp-controller="Url" asp-action="GetStatistics" method="post">
+    <input type="hidden" value="@ViewBag.Id" asp-for="UrlId" />
+    <input type="hidden" value="1" asp-for="StatisticType" />
+    <button type="submit">Статистика за країнами</button>
+</form>
+<form asp-controller="Url" asp-action="GetStatistics" method="post">
+    <input type="hidden" value="@ViewBag.Id" asp-for="UrlId" />
+    <input type="hidden" value="2" asp-for="StatisticType" />
+    <button type="submit">Статистика за операційними системами</button>
+</form>
+<form asp-controller="Url" asp-action="GetStatistics" method="post">
+    <input type="hidden" value="@ViewBag.Id" asp-for="UrlId" />
+    <input type="hidden" value="3" asp-for="StatisticType" />
+    <button type="submit">Статистика за браузерами</button>
+</form>

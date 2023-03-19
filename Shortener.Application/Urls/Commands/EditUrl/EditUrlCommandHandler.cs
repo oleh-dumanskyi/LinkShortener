@@ -10,19 +10,19 @@ namespace Shortener.Application.Urls.Commands.EditUrl
     public class EditUrlCommandHandler : IRequestHandler<EditUrlCommand, Unit>
     {
         private readonly IUrlDbContext _context;
-        private const string InvalidCharacters = ".~:/?#[]@!$&'()*+,;=\\|";
+        private const string InvalidCharacters = ".~:/?#[]@!$&'()*+•,;=\\|";
         public EditUrlCommandHandler(IUrlDbContext context) => _context = context;
         public async Task<Unit> Handle(EditUrlCommand request, CancellationToken cancellationToken)
         {
             var url = await _context.Urls.FirstOrDefaultAsync(url =>
                 url.Id == request.Id && url.UserId == request.UserId, cancellationToken);
 
-            if (url == null || url.IsDeleted)
+            if (url == null)
                 throw new NotFoundException(nameof(Url), url.Id);
 
             if (await _context.Urls
-                    .FirstOrDefaultAsync(u => 
-                            u.UriShortPart == request.ShortenedPartUri 
+                    .FirstOrDefaultAsync(u =>
+                            u.UriShortPart == request.ShortenedPartUri
                             && request.ShortenedPartUri != url.UriShortPart,
                         cancellationToken) != null)
                 throw new ConstraintException();

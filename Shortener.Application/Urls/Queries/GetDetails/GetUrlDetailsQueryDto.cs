@@ -37,9 +37,7 @@ namespace Shortener.Application.Urls.Queries.GetDetails
                 .ForMember(urlDto => urlDto.EditDate,
                     opt => opt.MapFrom(url => url.EditDate))
                 .ForMember(urlDto => urlDto.UriShortPart,
-                    opt => opt.MapFrom(url => url.UriShortenedPart))
-                .ForMember(urlDto => urlDto.FollowingsCounter,
-                    opt => opt.MapFrom(url => url.FollowingsCounter));
+                    opt => opt.MapFrom(url => url.UriShortenedPart));
         }
     }
 }

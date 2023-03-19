@@ -21,10 +21,9 @@ namespace Shortener.Application.Urls.Queries.GetUrlByShortUri
         {
             var entity = await _context.Urls.FirstOrDefaultAsync(u => u.UriShortPart == request.UriShortenedPart, cancellationToken);
 
-            if (entity == null || entity.IsDeleted)
+            if (entity == null)
                 throw new NotFoundException(nameof(Url), request.Id);
 
-            entity.FollowingsCounter += 1;
             _context.Urls.Update(entity);
             await _context.SaveChangesAsync(cancellationToken);
 

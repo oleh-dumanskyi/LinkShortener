@@ -20,7 +20,7 @@ namespace Shortener.Application.Urls.Queries.GetUrlsList
         public async Task<UrlsListVm> Handle(GetUrlListQuery request, CancellationToken cancellationToken)
         {
             var urlsQuery = await _context.Urls
-                .Where(url => url.UserId == request.UserId && !url.IsDeleted)
+                .Where(url => url.UserId == request.UserId)
                 .ProjectTo<UrlListDto>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
 

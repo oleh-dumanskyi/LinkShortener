@@ -7,6 +7,7 @@ namespace Shortener.Application.Interfaces
     {
         DbSet<Url> Urls { get; set; }
         DbSet<User> Users { get; set; }
+        DbSet<Redirection> Redirections { get; set; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

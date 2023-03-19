@@ -10,6 +10,8 @@ namespace Shortener.WebApi.Controllers
     {
         private IMediator _mediator;
 
+        protected IConfiguration _configuration;
+
         protected IMediator Mediator =>
             _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
 

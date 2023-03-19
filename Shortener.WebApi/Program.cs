@@ -5,6 +5,7 @@ using Shortener.Application.Common.Mappings;
 using Shortener.Application.Interfaces;
 using Shortener.Persistence;
 using System.Reflection;
+using Shortener.Application.Urls.Commands.CreateUrl;
 
 #region Service registrations
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +15,8 @@ builder.Environment.ContentRootPath = Assembly.GetEntryAssembly().Location;
 builder.Services.AddApplication();
 builder.Services.AddPersistence(configuration);
 builder.Services.AddAuthorization();
+
+builder.Services.AddHttpClient<CreateUrlCommandHandler>();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(opt =>
@@ -38,7 +41,7 @@ using (var scope = builder.Services.BuildServiceProvider().CreateScope())
     }
     catch (Exception e)
     {
-        
+
     }
 }
 

@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Shortener.Application.Common.Exceptions;
 using Shortener.Application.Interfaces;
 using System.Drawing;
-using System.Text;
 using ZXing;
 using ZXing.QrCode;
 using ZXing.Windows.Compatibility;
@@ -29,7 +28,7 @@ namespace Shortener.Application.Urls.Commands.CreateQrCode
 
             if (url.QrCodeImageBytes != null)
             {
-                byte[] existingBytes = Encoding.ASCII.GetBytes(url.QrCodeImageBytes);
+                byte[] existingBytes = url.QrCodeImageBytes;
                 using (var ms = new MemoryStream(existingBytes))
                 {
                     bitmap = new Bitmap(ms);
@@ -61,7 +60,7 @@ namespace Shortener.Application.Urls.Commands.CreateQrCode
                 bytes = stream.ToArray();
             }
 
-            url.QrCodeImageBytes = Encoding.Default.GetString(bytes);
+            url.QrCodeImageBytes = bytes;
             await _context.SaveChangesAsync(cancellationToken);
 
             return bitmap;

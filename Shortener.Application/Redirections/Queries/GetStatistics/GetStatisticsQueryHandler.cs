@@ -21,7 +21,7 @@ namespace Shortener.Application.Redirections.Queries.GetStatistics
                     .Where(id => id.UrlId == request.UrlId)
                     .Select(c => new { c.CountryName })
                     .ToListAsync(cancellationToken);
-                foreach (var element in groupedRedirections.GroupBy(c => c.CountryName))
+                foreach (var element in groupedRedirections.Where(u=>u.CountryName != null).GroupBy(c => c.CountryName))
                 {
                     dto.CountryStatistics.Add(element.Key, element.Count());
                 }

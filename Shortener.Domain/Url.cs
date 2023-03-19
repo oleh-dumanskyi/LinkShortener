@@ -11,7 +11,7 @@
         public Uri BaseUri { get; set; }
         public Uri ShortenedUri { get; set; }
         public string UriShortPart { get; set; }
-        public string? QrCodeImageBytes { get; set; }
+        public byte[]? QrCodeImageBytes { get; set; }
         public User User { get; set; }
         public IList<Redirection> Redirections { get; set; }
     }

@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Shortener.Application.Common.Mappings;
+﻿using Shortener.Application.Common.Mappings;
 using Shortener.Domain;
 
 namespace Shortener.Application.Redirections.Queries.GetStatistics

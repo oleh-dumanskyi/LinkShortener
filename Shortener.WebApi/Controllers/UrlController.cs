@@ -10,7 +10,6 @@ using Shortener.Application.Urls.Queries.GetUrlByShortUri;
 using Shortener.Application.Urls.Queries.GetUrlsList;
 using Shortener.WebApi.Models;
 using System.Data;
-using System.Net;
 using Shortener.Application.Redirections.Commands.Create;
 using Shortener.Application.Redirections.Queries.GetStatistics;
 using Shortener.Application.Urls.Commands.CreateQrCode;

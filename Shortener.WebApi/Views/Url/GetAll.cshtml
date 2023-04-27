@@ -1,9 +1,15 @@
 ﻿@model ModifyUrlDto
+@{
+    Layout = "/Views/_Layout.cshtml";
+}
 
 <p></p>
-<a asp-controller="Url" asp-action="Create">Нове посилання</a>
+<br/>
+<a asp-controller="Url" asp-action="Create" class="link">Нове посилання</a>
+<br/><br/>
 <p></p>
-<a asp-controller="Home" asp-action="Index">Назад</a>
+<a asp-controller="Home" asp-action="Index" class="link">Назад</a>
+<br/>
 @if (ViewBag.ErrorMessage != string.Empty)
 {
     <p><label style="color:red">@ViewBag.ErrorMessage</label></p>
@@ -15,41 +21,41 @@
         border-color: lightgrey; 
         border-style: solid;">
     <tr>
-        <th style="padding:0 15px 0 15px;">Заголовок</th>
-        <th style="padding:0 15px 0 15px;">Скорочений URL</th>
-        <th style="padding:0 15px 0 15px;"></th>
-        <th style="padding:0 15px 0 15px;"></th>
-        <th style="padding:0 15px 0 15px;"></th>
-        <th style="padding:0 15px 0 15px;"></th>
+        <th>Заголовок</th>
+        <th>Скорочений URL</th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th ></th>
     </tr>
     @foreach (var link in ViewBag.vm.Urls)
     {
         <tr>
-            <td style="padding:0 15px 0 15px;">@link.Title</td>
-            <td style="padding:0 15px 0 15px;"><a href="@link.ShortenedUri">@link.ShortenedUri</a></td>
-            <td style="padding:0 15px 0 15px;">
+            <td>@link.Title</td>
+            <td><a href="@link.ShortenedUri" class="short-link">@link.ShortenedUri</a></td>
+            <td>
                 <form asp-controller="Url" asp-action="Delete" method="post">
                     <input type="hidden" value="@link.Id" asp-for="Id"/>
-                    <button type="submit">Видалити</button>
+                    <button type="submit" class="link">Видалити</button>
                 </form>
             </td>
-            <td style="padding:0 15px 0 15px;">
+            <td>
                 <form asp-controller="Url" asp-action="GetDetails" method="post">
                     <input type="hidden" value="@link.Id" asp-for="Id" />
-                    <button type="submit">Деталі</button>
+                    <button type="submit" class="link">Деталі</button>
                 </form>
             </td>
-            <td style="padding:0 15px 0 15px;">
+            <td>
                 <form asp-controller="Url" asp-action="EditView" method="post">
                     <input type="hidden" value="@link.Id" asp-for="Id" />
                     <input type="hidden" asp-for="UserId" />
-                    <button type="submit">Редагувати</button>
+                    <button type="submit" class="link">Редагувати</button>
                 </form>
             </td>
-            <td style="padding:0 15px 0 15px;">
+            <td>
                 <form asp-controller="Url" asp-action="CreateQrCode" method="post">
                     <input type="hidden" value="@link.Id" asp-for="Id" />
-                    <button type="submit">Створити QR-код</button>
+                    <button type="submit" class="link">Створити QR-код</button>
                 </form>
             </td>
         </tr>

@@ -2,6 +2,7 @@
 @model HomeController
 @{
     var IsAuthorized = User.Identity.IsAuthenticated;
+    Layout = "/Views/_Layout.cshtml";
 }
 @{
     <body>
@@ -10,16 +11,18 @@
     {
         <p><h2>Необхідно увійти в систему!</h2></p>
         <p></p>
-        <a asp-controller="User" asp-action="Login">Увійти</a>
+        <a asp-controller="User" asp-action="Login" class="link">Увійти</a>
         <p></p>
-        <a asp-controller="User" asp-action="Register">Створити користувача</a>
+        <br/>
+                <a asp-controller="User" asp-action="Register" class="link">Створити користувача</a>
     }
     else
     {
         <div>
-            <h2>Ви увійшли в систему</h2>
-            <p><a asp-controller="Url" asp-action="GetAll">Мої посилання</a></p>
-            <p><a asp-controller="User" asp-action="Logout">Вийти</a></p>
+            <br/>
+                    <p><a asp-controller="Url" asp-action="GetAll" class="link">Мої посилання</a></p>
+            <br/>
+                    <p><a asp-controller="User" asp-action="Logout" class="link">Вийти</a></p>
         </div>
     }
     </div>

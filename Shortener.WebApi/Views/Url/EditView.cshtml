@@ -1,4 +1,7 @@
 ﻿@model Shortener.Application.Urls.Commands.EditUrl.EditUrlCommand
+@{
+    Layout = "/Views/_Layout.cshtml";
+}
 
 <form asp-controller="Url" asp-action="Edit" method="post">
     <div><h3>Редагувати посилання</h3></div>
@@ -10,7 +13,7 @@
     <div>
         <label>Заголовок</label>
         <br />
-        <input asp-for="Title" value="@ViewBag.UrlDetails.Title"/>
+        <input asp-for="Title" value="@ViewBag.UrlDetails.Title" class="input"/>
         <span asp-validation-for="Title"></span>
         <p></p>
     </div>
@@ -19,25 +22,25 @@
         <br />
         @if (@ViewBag.UrlDetails.Description != null)
         {
-            <input asp-for="Description" value="@ViewBag.UrlDetails.Description" />
+            <input asp-for="Description" value="@ViewBag.UrlDetails.Description" class="input" />
         }
         else
         {
-            <input asp-for="Description" />
+            <input asp-for="Description" class="input" />
         }
         <p></p>
     </div>
     <div>
         <label>Базове посилання</label>
         <br />
-        <input asp-for="BaseUri" value="@ViewBag.UrlDetails.BaseUri" />
+        <input asp-for="BaseUri" value="@ViewBag.UrlDetails.BaseUri" class="input" />
         <span asp-validation-for="BaseUri"></span>
         <p></p>
     </div>
     <div>
         <label>Скорочена частина посилання</label>
         <br />
-        <input asp-for="ShortenedPartUri" value="@ViewBag.UrlDetails.UriShortenedPart" />
+        <input asp-for="ShortenedPartUri" value="@ViewBag.UrlDetails.UriShortenedPart" class="input" />
         <span asp-validation-for="ShortenedPartUri"></span>
         <p></p>
     </div>
@@ -45,5 +48,5 @@
         <button type="submit" class="button">Зберегти</button>
     </div>
     <p></p>
-    <a asp-controller="Url" asp-action="GetAll">Назад</a>
+    <a asp-controller="Url" asp-action="GetAll" class="button">Назад</a>
 </form>

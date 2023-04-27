@@ -1,4 +1,7 @@
 ﻿@model Shortener.WebApi.Models.LoginUserDto
+@{
+    Layout = "/Views/_Layout.cshtml";
+}
 
 <form asp-controller="User" asp-action="Login" method="post">
     <div><h3>Вхід</h3></div>
@@ -6,21 +9,22 @@
     <div>
         <label>Ім'я користувача</label>
         <br/>
-        <input asp-for="Login" />
+        <input asp-for="Login" class="input"/>
         <span asp-validation-for="Login"></span>
         <p></p>
     </div>
     <div>
         <label>Пароль</label>
         <br/>
-        <input asp-for="Password"/>
+        <input asp-for="Password" class="input"/>
         <span asp-validation-for="Password"></span>
         <p></p>
     </div>
     <div>
         <button type="submit" class="button">Увійти</button>
+        <br/><br/>
     </div>
-    <a asp-controller="User" asp-action="Register">Створити користувача</a>
+    <a asp-controller="User" asp-action="Register" class="button">Створити користувача</a>
     <div>
         <p><label>@ViewBag.InputError</label></p>
     </div>

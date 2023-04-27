@@ -1,4 +1,7 @@
 ﻿@model CreateUrlDto
+@{
+    Layout = "/Views/_Layout.cshtml";
+}
 
 <form asp-controller="Url" asp-action="Create" method="post">
     <div><h3>Нове посилання</h3></div>
@@ -6,26 +9,26 @@
     <div>
         <label>Заголовок</label>
         <br />
-        <input asp-for="Title" />
+        <input asp-for="Title" class="input"/>
         <span asp-validation-for="Title"></span>
         <p></p>
     </div>
     <div>
         <label>Опис (опціонально)</label>
         <br />
-        <input asp-for="Description" />
+        <input asp-for="Description" class="input"/>
         <p></p>
     </div>
     <div>
         <label>Посилання</label>
         <br />
-        <input asp-for="BaseUri" />
+        <input asp-for="BaseUri" class="input"/>
         <span asp-validation-for="BaseUri"></span>
         <p></p>
     </div>
     <div>
         <button type="submit" class="button">Створити</button>
     </div>
-    <p></p>
-    <a asp-controller="Url" asp-action="GetAll">Назад</a>
+    <p><br/></p>
+    <a asp-controller="Url" asp-action="GetAll" class="button">Назад</a>
 </form>

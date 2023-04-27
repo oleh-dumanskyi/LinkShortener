@@ -1,4 +1,7 @@
 ﻿@model Shortener.Application.Users.Commands.RegisterUser.RegisterUserCommand
+@{
+    Layout = "/Views/_Layout.cshtml";
+}
 
 <form asp-controller="User" asp-action="Register" method="post">
     <div><h3>Створити нового користувача</h3></div>
@@ -6,21 +9,22 @@
     <div>
         <label>Ім'я користувача</label>
         <br/>
-        <input asp-for="Login" />
+        <input asp-for="Login" class="input"/>
         <span asp-validation-for="Login"></span>
         <p></p>
     </div>
     <div >
         <label>Пароль</label>
         <br/>
-        <input asp-for="Password"/>
+        <input asp-for="Password" class="input"/>
         <span asp-validation-for="Password" ></span>
         <p></p>
     </div>
     <div>
         <button type="submit" class="button">Створити</button>
+        <br/><br/>
     </div>
-    <a asp-controller="User" asp-action="Login">Увійти</a>
+    <a asp-controller="User" asp-action="Login" class="button">Увійти</a>
     <div>
         <p><label>@ViewBag.ErrorMessage</label></p>
     </div>

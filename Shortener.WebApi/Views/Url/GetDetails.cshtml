@@ -1,4 +1,7 @@
 ﻿@model Shortener.Application.Redirections.Queries.GetStatistics.GetStatisticsQuery
+@{
+    Layout = "/Views/_Layout.cshtml";
+}
 
 <h2>Деталі посилання: @ViewBag.UrlDetails.Title</h2>
 <p><p></p></p>
@@ -15,25 +18,29 @@
 {
     <p><label>Дата редагування: @ViewBag.UrlDetails.EditDate</label></p>
 }
-<p><p><a asp-controller="Url" asp-action="GetAll">Назад</a></p></p>
+<p><p><a asp-controller="Url" asp-action="GetAll" class="link">Назад</a></p></p>
 
 <form asp-controller="Url" asp-action="GetStatistics" method="post">
     <input type="hidden" value="@ViewBag.Id" asp-for="UrlId" />
     <input type="hidden" value="0" asp-for="StatisticType" />
-    <button type="submit">Статистика за датою</button>
+    <button type="submit" class="button">Статистика за датою</button>
+    <br/><br/>
 </form>
 <form asp-controller="Url" asp-action="GetStatistics" method="post">
     <input type="hidden" value="@ViewBag.Id" asp-for="UrlId" />
     <input type="hidden" value="1" asp-for="StatisticType" />
-    <button type="submit">Статистика за країнами</button>
+    <button type="submit" class="button">Статистика за країнами</button>
+    <br/><br/>
 </form>
 <form asp-controller="Url" asp-action="GetStatistics" method="post">
     <input type="hidden" value="@ViewBag.Id" asp-for="UrlId" />
     <input type="hidden" value="2" asp-for="StatisticType" />
-    <button type="submit">Статистика за операційними системами</button>
+    <button type="submit" class="button">Статистика за операційними системами</button>
+    <br/><br/>
 </form>
 <form asp-controller="Url" asp-action="GetStatistics" method="post">
     <input type="hidden" value="@ViewBag.Id" asp-for="UrlId" />
     <input type="hidden" value="3" asp-for="StatisticType" />
-    <button type="submit">Статистика за браузерами</button>
+    <button type="submit" class="button">Статистика за браузерами</button>
+    <br/><br/>
 </form>

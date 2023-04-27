@@ -74,6 +74,7 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseStaticFiles();
 app.UseCors("AllowAll");
 
 app.UseEndpoints(endpoints =>

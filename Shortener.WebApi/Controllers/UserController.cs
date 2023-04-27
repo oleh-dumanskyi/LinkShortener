@@ -42,7 +42,7 @@ namespace Shortener.WebApi.Controllers
             }
             catch (DbUpdateException e)
             {
-                if(e.InnerException.Message.Contains("UNIQUE constraint failed"))
+                if(e.InnerException.Message.Contains("UNIQUE constraint failed") || e.InnerException.Message.Contains("Cannot insert duplicate key row in object"))
                     ViewBag.ErrorMessage = "Користувач з таким ім'ям вже існує!";
                 else ViewBag.ErrorMessage = "Некоректні дані!";
                 return View();

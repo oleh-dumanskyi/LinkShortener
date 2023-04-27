@@ -16,48 +16,55 @@
 }
 <p><p></p></p>
 
-<table style=
-       "border-collapse: collapse; 
-        border-color: lightgrey; 
-        border-style: solid;">
-    <tr>
-        <th>Заголовок</th>
-        <th>Скорочений URL</th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th ></th>
-    </tr>
-    @foreach (var link in ViewBag.vm.Urls)
-    {
+@if (ViewBag.vm.Urls.Count != 0)
+{
+    <table style=
+           "border-collapse: collapse; 
+            border-color: lightgrey; 
+            border-style: solid;">
         <tr>
-            <td>@link.Title</td>
-            <td><a href="@link.ShortenedUri" class="short-link">@link.ShortenedUri</a></td>
-            <td>
-                <form asp-controller="Url" asp-action="Delete" method="post">
-                    <input type="hidden" value="@link.Id" asp-for="Id"/>
-                    <button type="submit" class="link">Видалити</button>
-                </form>
-            </td>
-            <td>
-                <form asp-controller="Url" asp-action="GetDetails" method="post">
-                    <input type="hidden" value="@link.Id" asp-for="Id" />
-                    <button type="submit" class="link">Деталі</button>
-                </form>
-            </td>
-            <td>
-                <form asp-controller="Url" asp-action="EditView" method="post">
-                    <input type="hidden" value="@link.Id" asp-for="Id" />
-                    <input type="hidden" asp-for="UserId" />
-                    <button type="submit" class="link">Редагувати</button>
-                </form>
-            </td>
-            <td>
-                <form asp-controller="Url" asp-action="CreateQrCode" method="post">
-                    <input type="hidden" value="@link.Id" asp-for="Id" />
-                    <button type="submit" class="link">Створити QR-код</button>
-                </form>
-            </td>
+            <th>Заголовок</th>
+            <th>Скорочений URL</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th ></th>
         </tr>
-    }
-</table>
+        @foreach (var link in ViewBag.vm.Urls)
+        {
+            <tr>
+                <td>@link.Title</td>
+                <td><a href="@link.ShortenedUri" class="short-link" style="padding-left: 15px; padding-right: 15px">@link.ShortenedUri</a></td>
+                <td>
+                    <form asp-controller="Url" asp-action="Delete" method="post">
+                        <input type="hidden" value="@link.Id" asp-for="Id"/>
+                        <button type="submit" class="link">Видалити</button>
+                    </form>
+                </td>
+                <td>
+                    <form asp-controller="Url" asp-action="GetDetails" method="post">
+                        <input type="hidden" value="@link.Id" asp-for="Id" />
+                        <button type="submit" class="link">Деталі</button>
+                    </form>
+                </td>
+                <td>
+                    <form asp-controller="Url" asp-action="EditView" method="post">
+                        <input type="hidden" value="@link.Id" asp-for="Id" />
+                        <input type="hidden" asp-for="UserId" />
+                        <button type="submit" class="link">Редагувати</button>
+                    </form>
+                </td>
+                <td>
+                    <form asp-controller="Url" asp-action="CreateQrCode" method="post">
+                        <input type="hidden" value="@link.Id" asp-for="Id" />
+                        <button type="submit" class="link">Створити QR-код</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <h3>Створені посилання відсутні</h3>
+}
